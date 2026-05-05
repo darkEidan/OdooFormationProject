@@ -1,5 +1,5 @@
 from application.services.employee_service import EmployeeService
-from api.cli.employee_cli import create_employee_cli, list_employees_cli
+from api.cli.employee_cli import create_employee_cli, list_employees_cli, get_employee_cli
 
 
 def main():
