@@ -1,0 +1,84 @@
+```sql
+
+CREATE TABLE IF NOT EXISTS department (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS role (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    level VARCHAR(50)
+);
+
+
+CREATE TABLE IF NOT EXISTS employee (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(150) NOT NULL,
+    email VARCHAR(150) UNIQUE NOT NULL,
+    hire_date DATE NOT NULL,
+    status VARCHAR(20) NOT NULL,
+    department_id INT NOT NULL,
+    role_id INT NOT NULL,
+
+    FOREIGN KEY (department_id) REFERENCES department(id),
+    FOREIGN KEY (role_id) REFERENCES role(id)
+);
+
+
+CREATE TABLE IF NOT EXISTS leave_request (
+    id SERIAL PRIMARY KEY,
+    employee_id INT NOT NULL,
+    type VARCHAR(50) NOT NULL,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    status VARCHAR(20) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (employee_id) REFERENCES employee(id)
+);
+
+CREATE TABLE IF NOT EXISTS attendance (
+    id SERIAL PRIMARY KEY,
+    employee_id INT NOT NULL,
+    work_date DATE NOT NULL,
+    check_in TIMESTAMP NOT NULL,
+    check_out TIMESTAMP,
+
+    FOREIGN KEY (employee_id) REFERENCES employee(id),
+
+    UNIQUE (employee_id, work_date)
+);
+
+CREATE TABLE IF NOT EXISTS employee_document (
+    id SERIAL PRIMARY KEY,
+    employee_id INT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    type VARCHAR(50) NOT NULL,
+    file_path TEXT NOT NULL,
+    uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    status VARCHAR(20) NOT NULL,
+
+    FOREIGN KEY (employee_id) REFERENCES employee(id)
+);
+
+CREATE TABLE IF NOT EXISTS payroll_record (
+    id SERIAL PRIMARY KEY,
+    employee_id INT NOT NULL,
+    period_start DATE NOT NULL,
+    period_end DATE NOT NULL,
+
+    base_salary NUMERIC(10,2) NOT NULL,
+    worked_hours NUMERIC(6,2) NOT NULL,
+    overtime_pay NUMERIC(10,2) DEFAULT 0,
+    bonus NUMERIC(10,2) DEFAULT 0,
+    deductions NUMERIC(10,2) DEFAULT 0,
+    final_salary NUMERIC(10,2) NOT NULL,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (employee_id) REFERENCES employee(id)
+);
+
+
+```
