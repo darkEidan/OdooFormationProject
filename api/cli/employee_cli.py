@@ -1,17 +1,31 @@
 from datetime import datetime
+
+from application.services.employee_service import EmployeeService
+from application.services.role_service import RoleService
 from domain.models.employee import Employee
 from domain.models.enums import EmployeeStatus
+from application.services.department_service import DepartmentService
+from api.cli.department_cli import list_departments_cli
+from role_cli import list_roles_cli
 
 
-def create_employee_cli(service):
+def create_employee_cli(emp_serv : EmployeeService, depart_serv : DepartmentService, role_serv : RoleService):
     try:
+
         name = input("Name: ")
         email = input("Email: ")
 
         hire_date_str = input("Hire date (DD-MM-YYYY): ")
         hire_date = datetime.strptime(hire_date_str, "%d-%m-%Y").date()
 
+        print("Department List")
+        print("---------------")
+        list_departments_cli(depart_serv)
         department_id = int(input("Department ID: "))
+
+        print("Role List")
+        print("---------")
+        list_roles_cli(role_serv)
         role_id = int(input("Role ID: "))
 
         employee = Employee(
@@ -24,7 +38,7 @@ def create_employee_cli(service):
             role_id=role_id
         )
 
-        employee = service.create_employee(employee)
+        employee = emp_serv.create_employee(employee)
 
         print("✅ Created:", employee)
 
