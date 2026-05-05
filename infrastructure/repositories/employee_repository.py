@@ -1,8 +1,8 @@
-from infrastructure.database import get_connection
 from domain.models.employee import Employee
 from domain.models.enums import EmployeeStatus
-
-class EmployeeRepository:
+from infrastructure.repositories.base_repository import BaseRepository
+from infrastructure.queries.employee_queries import EmployeeQueries
+class EmployeeRepository(BaseRepository):
 
     def _map_to_employee(self, row):
         if row is None:
@@ -18,71 +18,24 @@ class EmployeeRepository:
             role_id=row["role_id"]
         )
 
+    def create_employee(self, employee):
 
-    def create_employee(self, employee : Employee):
-        conn = get_connection()
-
-        try:
-            with conn.cursor() as cur:
-                cur.execute("""
-                    INSERT INTO employee (name, email, hire_date, status, department_id, role_id)
-                    VALUES (%s, %s, %s, %s, %s, %s)
-                    RETURNING *;
-                """, (
-                    employee.name,
-                    employee.email,
-                    employee.hire_date,
-                    employee.status.value,
-                    employee.department_id,
-                    employee.role_id
-                ))
-
-                row = cur.fetchone()
-
-            conn.commit()
-            return self._map_to_employee(row)
-
-        except:
-            conn.rollback()
-            raise
-
-        finally:
-            conn.close()
+        row = self._execute(EmployeeQueries.INSERT, employee.to_dict(), fetch_one=True)
+        return self._map_to_employee(row)
 
     def get_employee_by_id(self, employee_id):
-        conn = get_connection()
 
-        try:
-            with conn.cursor() as cur:
-                cur.execute(
-                    "SELECT * FROM employee WHERE id = %s;",
-                    (employee_id,)
-                )
-                row = cur.fetchone()
-                return self._map_to_employee(row)
-
-        finally:
-            conn.close()
+        row = self._execute(EmployeeQueries.SELECT_BY_ID, {"id": employee_id}, fetch_one=True)
+        return self._map_to_employee(row)
 
     def list_employees(self):
-        conn = get_connection()
 
-        try:
-            with conn.cursor() as cur:
-                cur.execute("SELECT * FROM employee;")
-                return cur.fetchall()
-
-        finally:
-            conn.close()
+        rows = self._execute(EmployeeQueries.SELECT_ALL, fetch_all=True)
+        return [self._map_to_employee(row) for row in rows]
 
     def get_employee_by_email(self, email):
-        conn = get_connection()
 
-        try:
-            with conn.cursor() as cur:
-                cur.execute("SELECT * FROM employee WHERE email = %s;", (email,))
-                return cur.fetchone()
-        finally:
-            conn.close()
+        row = self._execute(EmployeeQueries.SELECT_BY_EMAIL, {"email": email}, fetch_one=True)
+        return self._map_to_employee(row)
 
 

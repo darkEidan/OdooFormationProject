@@ -25,6 +25,15 @@ class Employee:
         # self.attendances: List["Attendance"] = []
         # self.benefits: List["EmployeeBenefit"] = []
 
+    def to_dict(self):
+        return {
+            "name": self.name,
+            "email": self.email,
+            "hire_date": self.hire_date,
+            "status": self.status.value,
+            "department_id": self.department_id,
+            "role_id": self.role_id
+        }
     # # ===== Business methods =====
     #
     # def request_leave(self, leave: "Leave"):

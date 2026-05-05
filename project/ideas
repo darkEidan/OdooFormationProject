@@ -1,0 +1,25 @@
+
+-- Administration du personnel
+Employés (infos personnelles, contrat, statut)
+Postes / rôles
+Départements
+
+-- Temps de travail
+Présences / absences
+Congés
+Maladies
+
+-- Paie (souvent complexe → à éviter au début)
+Salaires
+Primes
+Déductions
+
+-- Recrutement
+Candidats
+Offres d’emploi
+Processus d’entretien
+
+-- Performance / évaluation
+Objectifs
+Feedback
+Évaluations annuelles

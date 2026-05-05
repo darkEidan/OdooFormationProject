@@ -1,6 +1,5 @@
 import re
 from infrastructure.repositories.employee_repository import EmployeeRepository
-from domain.models.enums import EmployeeStatus
 from domain.models.employee import Employee
 
 class EmployeeService:

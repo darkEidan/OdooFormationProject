@@ -1,32 +1,35 @@
 from datetime import datetime
-
-from application.services.employee_service import EmployeeService
-from application.services.role_service import RoleService
 from domain.models.employee import Employee
 from domain.models.enums import EmployeeStatus
-from application.services.department_service import DepartmentService
-from api.cli.department_cli import list_departments_cli
-from role_cli import list_roles_cli
 
 
-def create_employee_cli(emp_serv : EmployeeService, depart_serv : DepartmentService, role_serv : RoleService):
+def create_employee_cli(service, department_service, role_service):
     try:
-
         name = input("Name: ")
         email = input("Email: ")
 
         hire_date_str = input("Hire date (DD-MM-YYYY): ")
         hire_date = datetime.strptime(hire_date_str, "%d-%m-%Y").date()
 
-        print("Department List")
-        print("---------------")
-        list_departments_cli(depart_serv)
-        department_id = int(input("Department ID: "))
+        print("\nDepartments:")
+        departments = department_service.list()
+        for d in departments:
+            print(f"{d.id} - {d.name}")
 
-        print("Role List")
-        print("---------")
-        list_roles_cli(role_serv)
+        department_id = int(input("Department ID: "))
+        if not any(d.id == department_id for d in departments):
+            print("❌ Invalid department")
+            return
+
+        print("\nRoles:")
+        roles = role_service.list()
+        for r in roles:
+            print(f"{r.id} - {r.name} ({r.level})")
+
         role_id = int(input("Role ID: "))
+        if not any(r.id == role_id for r in roles):
+            print("❌ Invalid role")
+            return
 
         employee = Employee(
             employee_id=None,
@@ -38,12 +41,12 @@ def create_employee_cli(emp_serv : EmployeeService, depart_serv : DepartmentServ
             role_id=role_id
         )
 
-        employee = emp_serv.create_employee(employee)
+        employee = service.create_employee(employee)
 
         print("✅ Created:", employee)
 
-    except ValueError as e:
-        print("❌", e)
+    except ValueError:
+        print("❌ Invalid input")
 
     except Exception as e:
         print("❌ Unexpected error:", e)

@@ -1,55 +1,26 @@
-from infrastructure.database import get_connection
+from infrastructure.repositories.base_repository import BaseRepository
+from infrastructure.queries.role_queries import RoleQueries
 from domain.models.role import Role
 
 
-class RoleRepository:
+class RoleRepository(BaseRepository):
 
     def _map(self, row):
-        if not row:
+        if row is None:
             return None
         return Role(row["id"], row["name"], row["level"])
 
     def create(self, role: Role):
-        conn = get_connection()
-        try:
-            with conn.cursor() as cur:
-                cur.execute("""
-                    INSERT INTO role (name, level)
-                    VALUES (%s, %s)
-                    RETURNING *;
-                """, (role.name, role.level))
+        row = self._execute(RoleQueries.INSERT,{"name": role.name,"level": role.level},fetch_one=True)
+        return self._map(row)
 
-                row = cur.fetchone()
-
-            conn.commit()
-            return self._map(row)
-
-        except:
-            conn.rollback()
-            raise
-
-        finally:
-            conn.close()
-    def get_by_id(self, role_id : int) -> Role | None :
-        conn = get_connection()
-
-        try:
-            with conn.cursor() as cur:
-                cur.execute(
-                    "SELECT * FROM role WHERE id = %s;",
-                    (role_id,)
-                )
-                row = cur.fetchone()
-                return self._map(row)
-
-        finally:
-            conn.close()
+    def get_by_id(self, role_id: int):
+        row = self._execute(RoleQueries.SELECT_BY_ID,{"id": role_id},fetch_one=True)
+        return self._map(row)
 
     def list(self):
-        conn = get_connection()
-        try:
-            with conn.cursor() as cur:
-                cur.execute("SELECT * FROM role;")
-                return [self._map(r) for r in cur.fetchall()]
-        finally:
-            conn.close()
+        rows = self._execute(RoleQueries.SELECT_ALL,fetch_all=True)
+        return [self._map(r) for r in rows]
+
+    def delete(self, role_id: int):
+        self._execute(RoleQueries.DELETE,{"id": role_id})
