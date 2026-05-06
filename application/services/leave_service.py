@@ -1,3 +1,4 @@
+from domain.models import leave
 from infrastructure.repositories.leave_repository import LeaveRepository
 from domain.models.leave import Leave
 from domain.models.enums import LeaveStatus, LeaveType
@@ -10,11 +11,7 @@ class LeaveService:
 
     def request_leave(self, leave: Leave):
 
-        if leave.start_date < date.today():
-            raise ValueError("Leave cannot start in the past")
-
-        if not leave.is_valid():
-            raise ValueError("Invalid leave dates")
+        leave.validate_for_request(date.today())
 
         # Find overlapping leave.
         overlapping = self.repo.find_overlapping(
@@ -34,10 +31,9 @@ class LeaveService:
         if not leave:
             raise ValueError("Leave not found")
 
-        if leave.status != LeaveStatus.PENDING:
-            raise ValueError("Only pending leaves can be approved")
+        leave.approve()
 
-        return self.repo.update_status(leave_id, LeaveStatus.APPROVED)
+        return self.repo.update(leave)
 
     def reject_leave(self, leave_id: int):
         leave = self.repo.get_by_id(leave_id)
@@ -45,10 +41,9 @@ class LeaveService:
         if not leave:
             raise ValueError("Leave not found")
 
-        if leave.status != LeaveStatus.PENDING:
-            raise ValueError("Only pending leaves can be rejected")
+        leave.reject()
 
-        return self.repo.update_status(leave_id, LeaveStatus.REJECTED)
+        return self.repo.update(leave)
 
     def list_employee_leaves(self, employee_id: int):
         return self.repo.list_by_employee(employee_id)

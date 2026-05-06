@@ -19,9 +19,14 @@ class LeaveQueries:
     ORDER BY start_date DESC;
     """
 
-    UPDATE_STATUS = """
+    UPDATE = """
     UPDATE leave_request
-    SET status = %(status)s
+    SET 
+        employee_id = %(employee_id)s,
+        leave_type = %(leave_type)s,
+        start_date = %(start_date)s,
+        end_date = %(end_date)s,
+        status = %(status)s
     WHERE id = %(id)s
     RETURNING id, employee_id, leave_type, start_date, end_date, status, created_at;
     """

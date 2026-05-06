@@ -21,9 +21,15 @@ class Leave:
         self.status = status
 
     def approve(self):
+        if self.status != LeaveStatus.PENDING:
+            raise ValueError("Only pending leaves can be approved")
+
         self.status = LeaveStatus.APPROVED
 
     def reject(self):
+        if self.status != LeaveStatus.PENDING:
+            raise ValueError("Only pending leaves can be rejected")
+
         self.status = LeaveStatus.REJECTED
 
     def duration(self) -> int:
@@ -35,3 +41,10 @@ class Leave:
 
     def is_valid(self) -> bool:
         return self.start_date <= self.end_date
+
+    def validate_for_request(self, today: date):
+        if self.start_date < today:
+            raise ValueError("Leave cannot start in the past")
+
+        if not self.is_valid():
+            raise ValueError("Invalid leave dates")

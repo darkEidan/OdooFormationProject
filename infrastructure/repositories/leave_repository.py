@@ -53,10 +53,17 @@ class LeaveRepository(BaseRepository):
         )
         return [self._map(r) for r in rows]
 
-    def update_status(self, leave_id: int, status: LeaveStatus):
+    def update(self, leave: Leave):
         row = self._execute(
-            LeaveQueries.UPDATE_STATUS,
-            {"id": leave_id, "status": status.value},
+            LeaveQueries.UPDATE,
+            {
+                "id": leave.id,
+                "employee_id": leave.employee_id,
+                "leave_type": leave.leave_type.value,
+                "start_date": leave.start_date,
+                "end_date": leave.end_date,
+                "status": leave.status.value,
+            },
             fetch_one=True
         )
         return self._map(row)
