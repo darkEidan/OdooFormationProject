@@ -1,4 +1,3 @@
-```sql
 
 CREATE TABLE IF NOT EXISTS department (
     id SERIAL PRIMARY KEY,
@@ -29,13 +28,14 @@ CREATE TABLE IF NOT EXISTS employee (
 CREATE TABLE IF NOT EXISTS leave_request (
     id SERIAL PRIMARY KEY,
     employee_id INT NOT NULL,
-    type VARCHAR(50) NOT NULL,
+    leave_type VARCHAR(50) NOT NULL,
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
     status VARCHAR(20) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    FOREIGN KEY (employee_id) REFERENCES employee(id)
+    FOREIGN KEY (employee_id) REFERENCES employee(id),
+    CHECK (start_date <= end_date)
 );
 
 CREATE TABLE IF NOT EXISTS attendance (
@@ -80,6 +80,3 @@ CREATE TABLE IF NOT EXISTS payroll_record (
 
     FOREIGN KEY (employee_id) REFERENCES employee(id)
 );
-
-
-```

@@ -21,3 +21,8 @@ class BenefitType(Enum):
 class Unit(Enum):
     EUR = "eur"
     PERCENT = "percent"
+
+class LeaveType(Enum):
+    PAID = "paid"
+    SICK = "sick"
+    UNPAID = "unpaid"
