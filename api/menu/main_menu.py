@@ -8,14 +8,14 @@ from application.services.container import Container
 
 class MainMenu(BaseMenu):
 
-    def __init__(self, main_service : Container):
+    def __init__(self, container : Container):
         super().__init__("Main Menu")
 
-        self.employee_menu = EmployeeMenu(main_service.employee_service)
-        self.department_menu = DepartmentMenu(main_service.department_service)
-        self.role_menu = RoleMenu(main_service.role_service)
-        self.attendance_menu = AttendanceMenu(main_service.attendance_service)
-        self.leave_menu = LeaveMenu(main_service.leave_service)
+        self.employee_menu = EmployeeMenu(container.employee_service)
+        self.department_menu = DepartmentMenu(container.department_service)
+        self.role_menu = RoleMenu(container.role_service)
+        self.attendance_menu = AttendanceMenu(container.attendance_service)
+        self.leave_menu = LeaveMenu(container.leave_service)
 
         self.configure()
 
