@@ -45,11 +45,11 @@ CREATE TABLE IF NOT EXISTS attendance (
     check_out TIMESTAMP,
 
     FOREIGN KEY (employee_id) REFERENCES employee(id),
-
-    UNIQUE INDEX one_open_attendance_per_employee
-    ON attendance(employee_id)
-    WHERE check_out IS NULL;
 );
+
+CREATE UNIQUE INDEX one_open_attendance_per_employee
+ON attendance(employee_id)
+WHERE check_out IS NULL;
 
 CREATE TABLE IF NOT EXISTS employee_document (
     id SERIAL PRIMARY KEY,

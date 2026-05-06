@@ -31,7 +31,7 @@ INSERT INTO employee (name, email, hire_date, status, department_id, role_id) VA
 -- LEAVE REQUESTS
 -- ======================
 
-INSERT INTO leave_request (employee_id, type, start_date, end_date, status) VALUES
+INSERT INTO leave_request (employee_id, leave_type, start_date, end_date, status) VALUES
 (1, 'vacation', '2026-06-01', '2026-06-05', 'pending'),
 (2, 'sick', '2026-05-10', '2026-05-12', 'approved'),
 (1, 'vacation', '2026-07-15', '2026-07-20', 'rejected');

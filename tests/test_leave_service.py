@@ -40,7 +40,7 @@ class FakeLeaveRepo:
             and not (l.end_date < start_date or l.start_date > end_date)
         ]
 
-def build_leave(start=date(2024, 1, 1), end=date(2024, 1, 5)):
+def build_leave(start=date(2027, 1, 1), end=date(2027, 1, 5)):
     return Leave(
         id=None,
         employee_id=1,
@@ -64,7 +64,7 @@ def test_request_leave_invalid_dates():
     service = LeaveService()
     service.repo = FakeLeaveRepo()
 
-    leave = build_leave(date(2024, 1, 5), date(2024, 1, 1))
+    leave = build_leave(date(2027, 1, 5), date(2027, 1, 1))
 
     with pytest.raises(ValueError):
         service.request_leave(leave)
@@ -75,10 +75,10 @@ def test_request_leave_overlap():
     fake_repo = FakeLeaveRepo()
     service.repo = fake_repo
 
-    existing = build_leave(date(2024, 1, 1), date(2024, 1, 5))
+    existing = build_leave(date(2027, 1, 1), date(2027, 1, 5))
     fake_repo.create(existing)
 
-    new_leave = build_leave(date(2024, 1, 3), date(2024, 1, 6))
+    new_leave = build_leave(date(2027, 1, 3), date(2027, 1, 6))
 
     with pytest.raises(ValueError):
         service.request_leave(new_leave)
