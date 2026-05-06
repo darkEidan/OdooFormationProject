@@ -10,6 +10,9 @@ class LeaveService:
 
     def request_leave(self, leave: Leave):
 
+        if leave.start_date < date.today():
+            raise ValueError("Leave cannot start in the past")
+
         if not leave.is_valid():
             raise ValueError("Invalid leave dates")
 

@@ -1,5 +1,5 @@
-from enums import BenefitType, Unit
-from employee import Employee
+from domain.models.enums import BenefitType, Unit
+from domain.models.employee import Employee
 from datetime import date
 
 
