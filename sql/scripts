@@ -47,7 +47,9 @@ CREATE TABLE IF NOT EXISTS attendance (
 
     FOREIGN KEY (employee_id) REFERENCES employee(id),
 
-    UNIQUE (employee_id, work_date)
+    UNIQUE INDEX one_open_attendance_per_employee
+    ON attendance(employee_id)
+    WHERE check_out IS NULL;
 );
 
 CREATE TABLE IF NOT EXISTS employee_document (

@@ -1,19 +1,10 @@
 class DepartmentQueries:
 
-    INSERT = """
-    INSERT INTO department (name)
-    VALUES (%(name)s)
-    RETURNING *;
-    """
+    INSERT = f"""INSERT INTO department (name) VALUES (%(name)s) RETURNING id, name;"""
 
-    SELECT_BY_ID = """
-    SELECT * FROM department WHERE id = %(id)s;
-    """
+    SELECT_BY_ID = f"""SELECT id, name FROM department WHERE id = %(id)s;"""
 
-    SELECT_ALL = """
-    SELECT * FROM department;
-    """
+    SELECT_ALL = f"""SELECT id, name FROM department;"""
 
-    DELETE = """
-    DELETE FROM department WHERE id = %(id)s;
-    """
+    DELETE = """DELETE FROM department WHERE id = %(id)s; """
+
