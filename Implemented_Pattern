@@ -1,0 +1,26 @@
+
+Repository Pattern —
+BaseRepository, EmployeeRepository, LeaveRepository...
+Toute l'interaction avec la base de données est encapsulée dans des repositories. Le service ne connaît pas SQL.
+
+Service Layer Pattern — EmployeeService, LeaveService...
+Toute la logique métier est centralisée dans une couche service, entre l'API et le repository.
+
+Template Method Pattern —
+BaseRepository._execute() définit le squelette de toute opération DB (connexion, exécution, commit/rollback, fermeture).
+Les sous-classes l'utilisent sans se soucier de ce mécanisme.
+
+Facade Pattern —
+MainService regroupe tous les services en un seul point d'entrée pour la couche API.
+Le menu n'a besoin que d'un seul objet.
+
+Query Object Pattern —
+EmployeeQueries, LeaveQueries...
+Les requêtes SQL sont isolées dans des classes dédiées, séparées de la logique d'accès aux données.
+
+Domain Model Pattern —
+Les classes Leave, Attendance, EmployeeBenefit portent leur propre logique métier (duration(), get_worked_hours(), is_active()) plutôt que d'être de simples structures de données.
+
+Architecture en couches (Layered Architecture) —
+4 couches strictement séparées : domain → application → infrastructure → api.
+Chaque couche ne dépend que de celle en dessous.

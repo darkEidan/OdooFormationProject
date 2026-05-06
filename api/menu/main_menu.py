@@ -4,11 +4,11 @@ from api.menu.department_menu import DepartmentMenu
 from api.menu.role_menu import RoleMenu
 from api.menu.attendance_menu import AttendanceMenu
 from api.menu.leave_menu import LeaveMenu
-from application.services.main_service import MainService
+from application.services.container import Container
 
 class MainMenu(BaseMenu):
 
-    def __init__(self, main_service : MainService):
+    def __init__(self, main_service : Container):
         super().__init__("Main Menu")
 
         self.employee_menu = EmployeeMenu(main_service.employee_service)

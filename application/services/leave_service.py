@@ -5,8 +5,8 @@ from datetime import date
 
 class LeaveService:
 
-    def __init__(self):
-        self.repo = LeaveRepository()
+    def __init__(self, leave_repo : LeaveRepository):
+        self.repo = leave_repo
 
     def request_leave(self, leave: Leave):
 

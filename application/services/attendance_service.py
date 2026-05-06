@@ -4,8 +4,8 @@ from infrastructure.repositories.attendance_repository import AttendanceReposito
 
 class AttendanceService:
 
-    def __init__(self):
-        self.repo = AttendanceRepository()
+    def __init__(self, attendance_repo : AttendanceRepository):
+        self.repo = attendance_repo
 
     def check_in(self, employee_id):
         existing = self.repo.get_open_attendance(employee_id)

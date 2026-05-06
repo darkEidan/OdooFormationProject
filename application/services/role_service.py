@@ -3,8 +3,8 @@ from domain.models.role import Role
 
 class RoleService:
 
-    def __init__(self):
-        self.repo = RoleRepository()
+    def __init__(self, role_repo : RoleRepository):
+        self.repo = role_repo
 
     def create(self, name, level):
         return self.repo.create(Role(None, name, level))

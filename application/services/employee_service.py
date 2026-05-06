@@ -4,8 +4,8 @@ from domain.models.employee import Employee
 
 class EmployeeService:
 
-    def __init__(self):
-        self.repo = EmployeeRepository()
+    def __init__(self, employee_repo : EmployeeRepository):
+        self.repo = employee_repo
 
     @staticmethod
     def _is_valid_email(email: str) -> bool:

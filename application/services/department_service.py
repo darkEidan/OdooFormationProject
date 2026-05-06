@@ -4,8 +4,8 @@ from domain.models.department import Department
 
 class DepartmentService:
 
-    def __init__(self):
-        self.repo = DepartmentRepository()
+    def __init__(self, depart_repo : DepartmentRepository):
+        self.repo = depart_repo
 
     def create(self, name):
         return self.repo.create(Department(None, name))
