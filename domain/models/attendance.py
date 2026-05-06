@@ -1,4 +1,4 @@
-from datetime import datetime, date, timedelta
+from datetime import datetime, timedelta
 from typing import Optional
 
 
@@ -8,13 +8,11 @@ class Attendance:
         self,
         attendance_id: Optional[int],
         employee_id: int,
-        work_date : date,
         check_in: datetime,
         check_out: Optional[datetime] = None
     ):
         self.id = attendance_id
         self.employee_id = employee_id
-        self.work_date = work_date
         self.check_in = check_in
         self.check_out = check_out
 

@@ -11,18 +11,17 @@ class AttendanceRepository(BaseRepository):
         return Attendance(
             row["id"],
             row["employee_id"],
-            row["work_date"],
             row["check_in"],
             row["check_out"]
         )
 
-    def check_in(self, employee_id, check_in, work_date):
-        row = self._execute(AttendanceQueries.INSERT_CHECK_IN,{"employee_id": employee_id, "check_in": check_in, "work_date" : work_date},fetch_one=True)
+    def check_in(self, employee_id, check_in):
+        row = self._execute(AttendanceQueries.INSERT_CHECK_IN,{"employee_id": employee_id, "check_in": check_in},fetch_one=True)
         return self._map(row)
 
-    def check_out(self, employee_id, check_out, work_date):
+    def check_out(self, employee_id, check_out):
         row = self._execute(
-            AttendanceQueries.UPDATE_CHECK_OUT,{"employee_id": employee_id, "check_out": check_out, "work_date" : work_date},fetch_one=True)
+            AttendanceQueries.UPDATE_CHECK_OUT,{"employee_id": employee_id, "check_out": check_out},fetch_one=True)
         return self._map(row)
 
     def get_open_attendance(self, employee_id):

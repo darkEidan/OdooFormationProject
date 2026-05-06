@@ -40,10 +40,10 @@ INSERT INTO leave_request (employee_id, type, start_date, end_date, status) VALU
 -- ATTENDANCE
 -- ======================
 
-INSERT INTO attendance (employee_id, work_date, check_in, check_out) VALUES
-(1, '2026-05-01', '2026-05-01 09:00:00', '2026-05-01 17:30:00'),
-(1, '2026-05-02', '2026-05-02 09:15:00', '2026-05-02 18:00:00'),
-(2, '2026-05-01', '2026-05-01 08:45:00', '2026-05-01 17:00:00');
+INSERT INTO attendance (employee_id, check_in, check_out) VALUES
+(1, '2026-05-01 09:00:00', '2026-05-01 17:30:00'),
+(1, '2026-05-02 09:15:00', '2026-05-02 18:00:00'),
+(2, '2026-05-01 08:45:00', '2026-05-01 17:00:00');
 
 -- ======================
 -- DOCUMENTS (FOLDER)

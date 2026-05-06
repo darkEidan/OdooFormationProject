@@ -25,7 +25,13 @@ class EmployeeService:
         return self.repo.create_employee(employee)
 
     def get_employee(self, employee_id):
-        return self.repo.get_employee_by_id(employee_id)
+
+        employee = self.repo.get_employee_by_id(employee_id)
+
+        if employee is None:
+            raise ValueError(f"Employee {employee_id} not found")
+
+        return employee
 
     def list_employees(self):
         return self.repo.list_employees()
