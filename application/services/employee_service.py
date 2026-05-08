@@ -1,10 +1,11 @@
 import re
-from infrastructure.repositories.employee_repository import EmployeeRepository
 from domain.models.employee import Employee
+from infrastructure.protocols.employee_repository_protocol import EmployeeRepositoryProtocol
+
 
 class EmployeeService:
 
-    def __init__(self, employee_repo : EmployeeRepository):
+    def __init__(self, employee_repo : EmployeeRepositoryProtocol):
         self.repo = employee_repo
 
     @staticmethod

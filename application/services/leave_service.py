@@ -1,12 +1,11 @@
 from domain.models import leave
-from infrastructure.repositories.leave_repository import LeaveRepository
+from infrastructure.protocols.leave_repository_protocol import LeaveRepositoryProtocol
 from domain.models.leave import Leave
-from domain.models.enums import LeaveStatus, LeaveType
 from datetime import date
 
 class LeaveService:
 
-    def __init__(self, leave_repo : LeaveRepository):
+    def __init__(self, leave_repo : LeaveRepositoryProtocol):
         self.repo = leave_repo
 
     def request_leave(self, leave: Leave):

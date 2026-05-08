@@ -2,6 +2,8 @@ from domain.models.employee import Employee
 from domain.models.enums import EmployeeStatus
 from infrastructure.repositories.base_repository import BaseRepository
 from infrastructure.queries.employee_queries import EmployeeQueries
+
+
 class EmployeeRepository(BaseRepository):
 
     def _map_to_employee(self, row):
@@ -37,5 +39,3 @@ class EmployeeRepository(BaseRepository):
 
         row = self._execute(EmployeeQueries.SELECT_BY_EMAIL, {"email": email}, fetch_one=True)
         return self._map_to_employee(row)
-
-

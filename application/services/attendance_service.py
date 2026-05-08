@@ -1,10 +1,10 @@
-from datetime import datetime, date
-from infrastructure.repositories.attendance_repository import AttendanceRepository
+from datetime import datetime
+from infrastructure.protocols.attendance_repository_protocol import AttendanceRepositoryProtocol
 
 
 class AttendanceService:
 
-    def __init__(self, attendance_repo : AttendanceRepository):
+    def __init__(self, attendance_repo : AttendanceRepositoryProtocol):
         self.repo = attendance_repo
 
     def check_in(self, employee_id):
