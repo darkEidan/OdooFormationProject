@@ -1,4 +1,3 @@
-from domain.models import leave
 from infrastructure.protocols.leave_repository_protocol import LeaveRepositoryProtocol
 from domain.models.leave import Leave
 from datetime import date

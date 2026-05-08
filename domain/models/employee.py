@@ -27,6 +27,7 @@ class Employee:
 
     def to_dict(self):
         return {
+            "id": self.id,
             "name": self.name,
             "email": self.email,
             "hire_date": self.hire_date,
@@ -34,15 +35,3 @@ class Employee:
             "department_id": self.department_id,
             "role_id": self.role_id
         }
-    # # ===== Business methods =====
-    #
-    # def request_leave(self, leave: "Leave"):
-    #     if leave.start_date < date.today():
-    #         raise ValueError("Cannot request leave in the past")
-    #     self.leaves.append(leave)
-    #
-    # def add_attendance(self, attendance: "Attendance"):
-    #     self.attendances.append(attendance)
-    #
-    # def assign_benefit(self, benefit: "EmployeeBenefit"):
-    #     self.benefits.append(benefit)
