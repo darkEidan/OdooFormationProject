@@ -2,3 +2,4 @@ psycopg[binary]
 python-dotenv
 email-validator
 pytest
+typing_extensions
