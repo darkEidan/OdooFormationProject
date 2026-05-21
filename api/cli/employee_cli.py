@@ -3,7 +3,7 @@ from domain.models.employee import Employee
 from domain.models.enums import EmployeeStatus
 
 
-def create_employee_cli(service, department_service, role_service):
+def create_employee_cli(service, departments, roles):
     try:
         name = input("Name: ")
         email = input("Email: ")
@@ -12,7 +12,6 @@ def create_employee_cli(service, department_service, role_service):
         hire_date = datetime.strptime(hire_date_str, "%d-%m-%Y").date()
 
         print("\nDepartments:")
-        departments = department_service.list()
         for d in departments:
             print(f"{d.id} - {d.name}")
 
@@ -22,7 +21,6 @@ def create_employee_cli(service, department_service, role_service):
             return
 
         print("\nRoles:")
-        roles = role_service.list()
         for r in roles:
             print(f"{r.id} - {r.name} ({r.level})")
 

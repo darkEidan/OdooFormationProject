@@ -11,7 +11,7 @@ class MainMenu(BaseMenu):
     def __init__(self, container : Container):
         super().__init__("Main Menu")
 
-        self.employee_menu = EmployeeMenu(container.employee_service)
+        self.employee_menu = EmployeeMenu(container.employee_service, container.department_service, container.role_service)
         self.department_menu = DepartmentMenu(container.department_service)
         self.role_menu = RoleMenu(container.role_service)
         self.attendance_menu = AttendanceMenu(container.attendance_service)
